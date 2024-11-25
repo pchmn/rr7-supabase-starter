@@ -17,7 +17,6 @@ COPY . /app/
 RUN --mount=type=cache,target=${PNPM_HOME} pnpm install --frozen-lockfile
 RUN --mount=type=cache,target=${TURBO_CACHE_DIR} pnpm turbo build --filter=@monorepo-template/web
 RUN --mount=type=cache,target=${PNPM_HOME} pnpm deploy --filter=@monorepo-template/web --prod /prod
-RUN echo "PNPM contents after deploy: $(ls -la /prod)"
 
 FROM base AS production
 WORKDIR /app
