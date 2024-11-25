@@ -27,4 +27,5 @@ jobs:
           context: .
           file: ./apps/web/.docker/Dockerfile
           tags: pchmn/monorepo-template-web:${{ github.sha}}
+          platforms: linux/amd64,linux/arm64
           push: true
