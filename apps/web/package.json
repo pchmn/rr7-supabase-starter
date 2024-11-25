@@ -2,6 +2,10 @@
   "name": "@monorepo-template/web",
   "private": true,
   "type": "module",
+  "files": [
+    "build",
+    "public/locales"
+  ],
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev --host",
