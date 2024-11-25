@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-template/monorepo",
+  "name": "monorepo-template",
   "private": true,
   "author": "pchmn",
   "repository": {
@@ -9,6 +9,7 @@
   "homepage": "https://github.com/pchmn/monorepo-template",
   "license": "MIT",
   "scripts": {
+    "dev": "turbo dev",
     "format": "biome format --write .",
     "clean": "npx npkill",
     "list-mismatches": "npx syncpack list-mismatches --types dev,prod,peer",
