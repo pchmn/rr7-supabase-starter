@@ -27,9 +27,13 @@ jobs:
           context: .
           file: ./apps/web/.docker/Dockerfile
           tags: pchmn/monorepo-template-web:${{ github.sha}}
-          platforms: linux/amd64,linux/arm64
           push: true
 
+  deploy:
+    name: 🚀 Deploy to Dokploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: 🚀 Deploy to Dokploy
         uses: ./.github/actions/dokploy
         with:
@@ -41,3 +45,5 @@ jobs:
           docker-image: pchmn/monorepo-template-web:${{ github.sha }}
           docker-port: 8080
           comment-pr: true
+          env: |
+            TEST_ENV=true

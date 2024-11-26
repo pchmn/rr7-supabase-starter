@@ -36,7 +36,7 @@ inputs:
   env:
     description: The environment variables to set
     required: false
-  comment_pr:
+  comment-pr:
     description: Comment PR with preview URL
     required: false
     default: "false"
