@@ -5,6 +5,7 @@ description: Deploy your application to Dokploy
 inputs:
   github-token:
     description: The GitHub token
+    default: ${{ github.token }}
     required: false
   dokploy-base-url:
     description: The Dokploy base URL
