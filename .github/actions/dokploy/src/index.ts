@@ -10,10 +10,11 @@ import {
   client,
   domainByApplicationId,
   domainCreate,
-  domainGenerateDomain,
   projectOne,
+  serverPublicIp,
 } from "./sdk/client";
 import type { Application, Domain, Project } from "./sdk/types";
+import { toKebabCase } from "./utils/string";
 
 const config = getConfig();
 let octokit: ReturnType<typeof github.getOctokit>;
@@ -60,19 +61,7 @@ async function main() {
       });
 
       core.info(`Deploying ${application.name}...`);
-      // wait 10 seconds before deploying
-      await new Promise((resolve) => setTimeout(resolve, 10000));
-      try {
-        const deployResponse = await deployApplication(
-          application.applicationId
-        );
-        core.debug(`Deploy response: ${JSON.stringify(deployResponse)}`);
-      } catch (deployError) {
-        core.error("Deploy failed with error:");
-        core.error(deployError.message);
-        core.error(JSON.stringify(deployError.response?.data || {}));
-        // throw deployError;
-      }
+      await deployApplication(application.applicationId);
 
       core.debug("Waiting for deployment to be done...");
       await waitForDeploymentToBeDone(application.applicationId);
@@ -129,14 +118,20 @@ async function getOrCreateApplication() {
     },
   });
   if (application) {
-    const { data: host } = await domainGenerateDomain({
-      body: {
-        appName: config.applicationName,
-      },
+    // const { data: host } = await domainGenerateDomain({
+    //   body: {
+    //     appName: config.applicationName,
+    //   },
+    // });
+
+    const domain = await generateDomain({
+      appName: config.applicationName,
+      projectName: (project as Project).name,
     });
+
     await domainCreate({
       body: {
-        host: host as string,
+        host: domain,
         applicationId: (application as Application).applicationId,
         https: true,
         certificateType: "letsencrypt",
@@ -148,10 +143,29 @@ async function getOrCreateApplication() {
 }
 
 async function getApplicationUrl(applicationId: string) {
-  const { data, error } = await domainByApplicationId({
+  const { data } = await domainByApplicationId({
     query: { applicationId },
   });
   return `https://${(data as Domain[])[0].host}`;
+}
+
+async function generateDomain({
+  appName,
+  projectName,
+  domain = "sslip.io",
+}: {
+  appName: string;
+  projectName: string;
+  domain?: string;
+}) {
+  const subdomain = toKebabCase(`${projectName}-${appName}`);
+
+  if (domain === "sslip.io") {
+    const { data: publicIp } = await serverPublicIp();
+    return `${subdomain}.${(publicIp as string).replace(/\./g, "-")}.${domain}`;
+  }
+
+  return `${subdomain}.${domain}`;
 }
 
 async function deployApplication(applicationId: string) {
