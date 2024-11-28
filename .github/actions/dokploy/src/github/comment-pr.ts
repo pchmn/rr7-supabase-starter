@@ -24,9 +24,9 @@ export async function setPullRequestComment(
   
   **Your PR has been automatically deployed to Dokploy**
 
-  ✅ Application: ${appUrl}
+  - ✅ [App Preview](${appUrl})
   
-  ⚙️ Administration: ${appSettingsUrl}
+  - ⚙️ [App Administration](${appSettingsUrl})
   
   ${COMMENT_TAG}
       `;
