@@ -14,5 +14,6 @@ export function getConfig() {
     dockerPort: core.getInput("docker-port"),
     env: core.getMultilineInput("env"),
     commentPr: core.getBooleanInput("comment-pr"),
+    action: core.getInput("action", { required: true }) as "deploy" | "destroy",
   };
 }

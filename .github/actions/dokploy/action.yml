@@ -41,6 +41,9 @@ inputs:
     description: Comment PR with preview URL
     required: false
     default: "false"
+  action:
+    description: The action to perform (deploy | destroy)
+    default: "deploy"
 
 runs:
   using: "node20"

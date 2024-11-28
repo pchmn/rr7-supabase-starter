@@ -16,31 +16,19 @@ export async function getOrCreateApplication({
   projectId,
   dockerPort,
 }: {
-  applicationId?: string;
+  applicationId: string;
   applicationName: string;
   projectId: string;
   dockerPort: string;
 }) {
-  if (applicationId) {
-    const { data } = await applicationOne({
-      query: { applicationId },
-    });
-
-    if (data) {
-      core.info(`Application ${applicationName} found`);
-      return data as Application;
-    }
-  }
-
-  const { data: project } = await projectOne({
-    query: { projectId },
+  const { application: existingApplication, project } = await getApplication({
+    applicationId,
+    applicationName,
+    projectId,
   });
-  for (const application of (project as Project | undefined)?.applications ??
-    []) {
-    if (application.name === applicationName) {
-      core.info(`Application ${applicationName} found`);
-      return application;
-    }
+
+  if (existingApplication) {
+    return existingApplication;
   }
 
   core.info(`Creating application ${applicationName}...`);
@@ -68,6 +56,53 @@ export async function getOrCreateApplication({
     });
     return application as Application;
   }
+}
+
+export async function getApplication({
+  applicationId,
+  applicationName,
+  projectId,
+}: {
+  applicationId: string;
+  applicationName: string;
+  projectId: string;
+}) {
+  if (applicationId) {
+    const { data: application } = await applicationOne({
+      query: { applicationId },
+    });
+
+    if (application) {
+      core.info(`Application ${applicationName} found`);
+      return {
+        application: application as Application,
+      };
+    }
+  }
+
+  const { data: project } = await projectOne({
+    query: { projectId },
+  });
+
+  if (!project) {
+    return {
+      application: undefined,
+      project: undefined,
+    };
+  }
+
+  for (const application of (project as Project).applications) {
+    if (application.name === applicationName) {
+      core.info(`Application ${applicationName} found`);
+      return {
+        application,
+      };
+    }
+  }
+
+  return {
+    project: project as Project,
+  };
 }
 
 async function generateDomain({
