@@ -59,26 +59,26 @@ runs:
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
 
-    - name: Docker Build Cache
-      id: cache-primes
-      uses: actions/cache@v4
-      with:
-        path: |
-          pnpm
-          .turbo
-        key: build-cache-${{ hashFiles('pnpm-lock.yaml') }}
-        restore-keys: |
-          build-cache-
+    # - name: Docker Build Cache
+    #   id: cache-primes
+    #   uses: actions/cache@v4
+    #   with:
+    #     path: |
+    #       pnpm
+    #       .turbo
+    #     key: build-cache-${{ hashFiles('pnpm-lock.yaml') }}
+    #     restore-keys: |
+    #       build-cache-
 
-    - name: inject cache into docker
-      uses: reproducible-containers/buildkit-cache-dance@v3.1.0
-      with:
-        cache-map: |
-          {
-            "pnpm": "/pnpm",
-            ".turbo": "/.turbo"
-          }
-        skip-extraction: ${{ steps.cache.outputs.cache-hit }}
+    # - name: inject cache into docker
+    #   uses: reproducible-containers/buildkit-cache-dance@v3.1.0
+    #   with:
+    #     cache-map: |
+    #       {
+    #         "pnpm": "/pnpm",
+    #         ".turbo": "/.turbo"
+    #       }
+    #     skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
