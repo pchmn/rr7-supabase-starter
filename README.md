@@ -53,8 +53,10 @@ The following secrets need to be configured in your repository settings:
 
 **Docker Hub Authentication:**
 
-- `DOCKERHUB_USERNAME`: Your Docker Hub username
-- `DOCKERHUB_TOKEN`: A Docker Hub access token
+- `DOCKER_USERNAME`: Your Docker registry username
+- `DOCKER_PASSWORD`: A Docker registry password
+
+> if using a different registry than docker hub, change `registry` input for action `./.github/actions/build-docker` in `preview-up.yml`
 
 **AWS Cache (Optional):**
 
