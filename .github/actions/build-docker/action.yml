@@ -74,14 +74,14 @@ runs:
         password: ${{ inputs.password }}
 
     - uses: aws-actions/configure-aws-credentials@v4
-      if: inputs.aws-bucket-name != ""
+      if: inputs.aws-bucket-name
       with:
         aws-region: ${{ inputs.aws-region }}
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
 
     - name: Docker Build Cache
-      if: inputs.aws-bucket-name != ""
+      if: inputs.aws-bucket-name
       id: s3-cache
       uses: runs-on/cache@v4
       with:
@@ -95,7 +95,7 @@ runs:
         RUNS_ON_S3_BUCKET_CACHE: ${{ inputs.aws-bucket-name }}
 
     - name: Docker Build Cache
-      if: inputs.aws-bucket-name == ""
+      if: ${{ !inputs.aws-bucket-name }}
       id: gha-cache
       uses: actions/cache@v4
       with:
