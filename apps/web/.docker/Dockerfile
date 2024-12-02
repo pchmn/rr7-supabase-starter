@@ -14,9 +14,12 @@ ARG VITE_TRANSLATIONS_HASH
 ENV VITE_TRANSLATIONS_HASH=$VITE_TRANSLATIONS_HASH
 WORKDIR /app
 COPY . /app/
-RUN --mount=type=cache,target=${PNPM_HOME} pnpm install --frozen-lockfile
-RUN --mount=type=cache,target=${TURBO_CACHE_DIR} pnpm turbo build --filter=@monorepo-template/web
-RUN --mount=type=cache,target=${PNPM_HOME} pnpm deploy --filter=@monorepo-template/web --prod /prod
+RUN --mount=type=cache,target=${PNPM_HOME} \
+    pnpm install --frozen-lockfile
+RUN --mount=type=cache,target=${TURBO_CACHE_DIR} \
+    pnpm turbo build --filter=@monorepo-template/web
+RUN --mount=type=cache,target=${PNPM_HOME} \
+    pnpm deploy --filter=@monorepo-template/web --prod /prod
 
 FROM base AS production
 WORKDIR /app
