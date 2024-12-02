@@ -14,6 +14,20 @@ inputs:
     description: Docker password
     required: false
 
+  # AWS inputs
+  aws-region:
+    description: AWS region
+    required: false
+  aws-access-key-id:
+    description: AWS access key ID
+    required: false
+  aws-secret-access-key:
+    description: AWS secret access key
+    required: false
+  aws-bucket-name:
+    description: AWS bucket name
+    required: false
+
   # Build inputs
   build-args:
     description: List of build-time variables
@@ -59,26 +73,35 @@ runs:
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
 
-    # - name: Docker Build Cache
-    #   id: cache-primes
-    #   uses: actions/cache@v4
-    #   with:
-    #     path: |
-    #       pnpm
-    #       .turbo
-    #     key: build-cache-${{ hashFiles('pnpm-lock.yaml') }}
-    #     restore-keys: |
-    #       build-cache-
+    - uses: aws-actions/configure-aws-credentials@v4
+      if: inputs.aws-region && inputs.aws-access-key-id && inputs.aws-secret-access-key && inputs.aws-bucket-name
+      with:
+        aws-region: ${{ inputs.aws-region }}
+        aws-access-key-id: ${{ inputs.aws-access-key-id }}
+        aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
 
-    # - name: inject cache into docker
-    #   uses: reproducible-containers/buildkit-cache-dance@v3.1.0
-    #   with:
-    #     cache-map: |
-    #       {
-    #         "pnpm": "/pnpm",
-    #         ".turbo": "/.turbo"
-    #       }
-    #     skip-extraction: ${{ steps.cache.outputs.cache-hit }}
+    - name: Docker Build Cache
+      id: cache
+      uses: runs-on/cache@v4
+      with:
+        path: |
+          pnpm
+          .turbo
+        key: build-cache-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          build-cache-
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: ${{ inputs.aws-bucket-name }}
+
+    - name: Inject cache into docker
+      uses: reproducible-containers/buildkit-cache-dance@v3.1.0
+      with:
+        cache-map: |
+          {
+            "pnpm": "/pnpm",
+            ".turbo": "/.turbo"
+          }
+        skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
