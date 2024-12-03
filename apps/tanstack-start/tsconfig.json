@@ -1,0 +1,11 @@
+{
+  "extends": "@monorepo-template/tsconfig/base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"]
+    },
+    "noEmit": true
+  }
+}
