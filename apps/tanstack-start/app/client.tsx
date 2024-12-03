@@ -1,6 +1,8 @@
-import { StartClient } from '@tanstack/start'
-import { hydrateRoot } from 'react-dom/client'
-import { createRouter } from './router'
+import '@monorepo-template/ui/style.css';
+
+import { StartClient } from '@tanstack/start';
+import { hydrateRoot } from 'react-dom/client';
+import { createRouter } from './router';
 
 const router = createRouter()
 

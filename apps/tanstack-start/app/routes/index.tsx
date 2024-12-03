@@ -1,3 +1,4 @@
+import { Button } from '@monorepo-template/ui/button'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/start'
 import * as fs from 'node:fs'
@@ -33,8 +34,7 @@ function Home() {
   const state = Route.useLoaderData()
 
   return (
-    <button
-      type="button"
+    <Button
       onClick={() => {
         updateCount({ data: 1 }).then(() => {
           router.invalidate()
@@ -42,6 +42,6 @@ function Home() {
       }}
     >
       Add 1 to {state}?
-    </button>
+    </Button>
   )
 }

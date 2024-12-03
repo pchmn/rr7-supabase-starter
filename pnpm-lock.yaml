@@ -72,18 +72,36 @@ importers:
 
   apps/tanstack-start:
     dependencies:
+      '@monorepo-template/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@tanstack/react-router':
         specifier: ^1.85.4
         version: 1.85.4(@tanstack/router-generator@1.85.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/start':
         specifier: ^1.85.4
         version: 1.85.4(@types/node@20.17.7)(ioredis@5.4.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.36.0)(typescript@5.6.3)(vite@6.0.2(@types/node@20.17.7)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: ^0.464.0
+        version: 0.464.0(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      tailwind-merge:
+        specifier: ^2.5.5
+        version: 2.5.5
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.15)
       vinxi:
         specifier: ^0.5.0
         version: 0.5.0(@types/node@20.17.7)(ioredis@5.4.1)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.6.1)
@@ -100,9 +118,15 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.0.2(@types/node@20.17.7)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))
+      tailwindcss:
+        specifier: ^3.4.15
+        version: 3.4.15
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
+      vite-tsconfig-paths:
+        specifier: ^5.1.2
+        version: 5.1.3(typescript@5.6.3)(vite@6.0.2(@types/node@20.17.7)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))
 
   packages/tsconfig: {}
 
@@ -7304,6 +7328,17 @@ snapshots:
       tsconfck: 3.1.4(typescript@5.6.3)
     optionalDependencies:
       vite: 5.4.11(@types/node@20.17.7)(terser@5.36.0)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  vite-tsconfig-paths@5.1.3(typescript@5.6.3)(vite@6.0.2(@types/node@20.17.7)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)):
+    dependencies:
+      debug: 4.3.7(supports-color@9.4.0)
+      globrex: 0.1.2
+      tsconfck: 3.1.4(typescript@5.6.3)
+    optionalDependencies:
+      vite: 6.0.2(@types/node@20.17.7)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
