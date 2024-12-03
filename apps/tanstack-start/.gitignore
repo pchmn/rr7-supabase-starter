@@ -1,0 +1,8 @@
+.env
+!.env.example
+.DS_Store
+build
+.output
+.vinxi
+node_modules
+*.tsbuildinfo

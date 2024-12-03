@@ -3,10 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "files": [
+    ".output",
+    ".vinxi"
+  ],
   "scripts": {
     "dev": "vinxi dev --host",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "PORT=8080 node .output/server/index.mjs"
   },
   "keywords": [],
   "author": "",

@@ -33,8 +33,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           # Docker build
           context: .
-          file: ./apps/web/.docker/Dockerfile
-          tags: pchmn/monorepo-template-web:${{ github.sha}}
+          file: ./apps/tanstack-start/.docker/Dockerfile
+          tags: pchmn/monorepo-template-tanstack-start:${{ github.sha}}
           push: true
 
   deploy:
