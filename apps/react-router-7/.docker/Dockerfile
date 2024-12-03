@@ -17,9 +17,9 @@ COPY . /app/
 RUN --mount=type=cache,target=${PNPM_HOME} \
     pnpm install --frozen-lockfile
 RUN --mount=type=cache,target=${TURBO_CACHE_DIR} \
-    pnpm turbo build --filter=@monorepo-template/web
+    pnpm turbo build --filter=@monorepo-template/react-router-7
 RUN --mount=type=cache,target=${PNPM_HOME} \
-    pnpm deploy --filter=@monorepo-template/web --prod /prod
+    pnpm deploy --filter=@monorepo-template/react-router-7 --prod /prod
 
 FROM base AS production
 WORKDIR /app
