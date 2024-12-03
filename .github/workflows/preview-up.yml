@@ -57,5 +57,6 @@ jobs:
           application-name: pr-${{ github.event.number }}
           docker-image: pchmn/monorepo-template-tanstack-start:${{ github.sha }}
           docker-port: 8080
+          platforms: linux/amd64,linux/arm64
           env: |
             TEST_ENV=true
