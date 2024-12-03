@@ -10,16 +10,16 @@ RUN corepack enable
 RUN pnpm config set store-dir ${PNPM_HOME}
 
 FROM base AS build
-ARG VITE_TRANSLATIONS_HASH
-ENV VITE_TRANSLATIONS_HASH=$VITE_TRANSLATIONS_HASH
+# ARG VITE_TRANSLATIONS_HASH
+# ENV VITE_TRANSLATIONS_HASH=$VITE_TRANSLATIONS_HASH
 WORKDIR /app
 COPY . /app/
 RUN --mount=type=cache,target=${PNPM_HOME} \
     pnpm install --frozen-lockfile
 RUN --mount=type=cache,target=${TURBO_CACHE_DIR} \
-    pnpm turbo build --filter=@monorepo-template/web
+    pnpm turbo build --filter=@monorepo-template/tanstack-start
 RUN --mount=type=cache,target=${PNPM_HOME} \
-    pnpm deploy --filter=@monorepo-template/web --prod /prod
+    pnpm deploy --filter=@monorepo-template/tanstack-start --prod /prod
 
 FROM base AS production
 WORKDIR /app
