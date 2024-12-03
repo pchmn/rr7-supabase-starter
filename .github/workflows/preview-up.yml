@@ -55,7 +55,7 @@ jobs:
           dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
           project-id: 0_G71Uh8nHwvaHXw0eqew
           application-name: pr-${{ github.event.number }}
-          docker-image: pchmn/monorepo-template-web:${{ github.sha }}
+          docker-image: pchmn/monorepo-template-tanstack-start:${{ github.sha }}
           docker-port: 8080
           env: |
             TEST_ENV=true
