@@ -32,6 +32,7 @@
   },
   "exports": {
     "./*": "./src/components/*.tsx",
+    "./theme-provider.client": "./src/providers/theme-provider.client.tsx",
     "./utils": "./src/lib/utils.ts",
     "./tailwind.config": "./tailwind.config.ts",
     "./style.css": "./src/style.css",
