@@ -1,7 +1,7 @@
-import baseConfig from "@monorepo-template/ui/tailwind.config";
-import type { Config } from "tailwindcss";
+import baseConfig from '@monorepo-template/ui/tailwind.config';
+import type { Config } from 'tailwindcss';
 
 export default {
-  content: ["./src/**/*.{ts,tsx}", "../../packages/ui/src/**/*.{ts,tsx}"],
+  content: ['./src/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}'],
   presets: [baseConfig],
 } satisfies Config;

@@ -4,9 +4,7 @@
   "private": true,
   "author": "pchmn",
   "license": "MIT",
-  "files": [
-    "src/style.css"
-  ],
+  "files": ["src/style.css"],
   "scripts": {
     "format": "biome format --write ."
   },

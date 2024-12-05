@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "files": [
-    ".output",
-    ".vinxi"
-  ],
+  "files": [".output", ".vinxi"],
   "scripts": {
     "dev": "vinxi dev --host",
     "build": "vinxi build",
