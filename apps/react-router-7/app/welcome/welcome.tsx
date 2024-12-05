@@ -1,3 +1,4 @@
+import { Button } from '@monorepo-template/ui/button';
 import logoDark from './logo-dark.svg';
 import logoLight from './logo-light.svg';
 
@@ -41,6 +42,7 @@ export function Welcome() {
             </ul>
           </nav>
         </div>
+        <Button>Click me</Button>
       </div>
     </main>
   );

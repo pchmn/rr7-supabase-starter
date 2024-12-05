@@ -1,14 +1,16 @@
 import {
-  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
 } from 'react-router';
 
-import type { Route } from './+types/root';
+import '@monorepo-template/ui/style.css';
 import './app.css';
+
+import type { Route } from './+types/root';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

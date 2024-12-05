@@ -1,22 +1,7 @@
+import baseConfig from '@monorepo-template/ui/tailwind.config';
 import type { Config } from 'tailwindcss';
 
 export default {
-  content: ['./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}'],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: [
-          '"Inter"',
-          'ui-sans-serif',
-          'system-ui',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-          '"Noto Color Emoji"',
-        ],
-      },
-    },
-  },
-  plugins: [],
+  content: ['./app/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}'],
+  presets: [baseConfig],
 } satisfies Config;
