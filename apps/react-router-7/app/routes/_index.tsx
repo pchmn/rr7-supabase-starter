@@ -1,5 +1,5 @@
-import type { Route } from './+types/home';
-import { Welcome } from '../welcome/welcome';
+import { Button } from '@monorepo-template/ui/button';
+import type { Route } from './+types/_index';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +9,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <div>
+      <Button>Click me</Button>
+    </div>
+  );
 }

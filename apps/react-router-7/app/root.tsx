@@ -5,12 +5,25 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useLoaderData,
 } from 'react-router';
 
 import '@monorepo-template/ui/style.css';
 import './app.css';
 
+import {
+  PreventFlashOnWrongTheme,
+  ThemeProvider,
+  useTheme,
+} from 'remix-themes';
 import type { Route } from './+types/root';
+import { themeSessionResolver } from './lib/theme/session.server';
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const { getTheme } = await themeSessionResolver(request);
+
+  return { theme: getTheme() };
+}
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -26,8 +39,22 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { theme } = useLoaderData<typeof loader>();
   return (
-    <html lang='en'>
+    <ThemeProvider specifiedTheme={theme} themeAction='/preferences/set-theme'>
+      <InnerLayout>
+        {children}
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
+      </InnerLayout>
+    </ThemeProvider>
+  );
+}
+
+export function InnerLayout({ children }: { children: React.ReactNode }) {
+  const [theme] = useTheme();
+
+  return (
+    <html lang='en' className={theme ?? ''}>
       <head>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
