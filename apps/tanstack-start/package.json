@@ -5,7 +5,7 @@
   "type": "module",
   "files": [".output", ".vinxi"],
   "scripts": {
-    "dev": "vinxi dev --host",
+    "dev": "PORT=5174 vinxi dev --host",
     "build": "vinxi build",
     "start": "PORT=8080 node .output/server/index.mjs"
   },

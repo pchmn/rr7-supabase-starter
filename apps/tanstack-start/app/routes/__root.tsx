@@ -1,3 +1,5 @@
+// import uiCss from 'app/routes/styles.css?url';
+import uiCss from '@monorepo-template/ui/style.css?url';
 import {
   Outlet,
   ScrollRestoration,
@@ -20,6 +22,7 @@ export const Route = createRootRoute({
         title: 'TanStack Start Starter',
       },
     ],
+    links: [{ rel: 'stylesheet', href: uiCss }],
   }),
   component: RootComponent,
 });
