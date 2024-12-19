@@ -1,3 +1,4 @@
+import { useTheme } from '@monorepo-template/ssr-theme';
 import { Button } from '@monorepo-template/ui/button';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/start';
@@ -32,13 +33,12 @@ export const Route = createFileRoute('/')({
 function Home() {
   const router = useRouter();
   const state = Route.useLoaderData();
+  const [theme, setTheme] = useTheme();
 
   return (
     <Button
       onClick={() => {
-        updateCount({ data: 1 }).then(() => {
-          router.invalidate();
-        });
+        setTheme(theme === 'dark' ? 'light' : 'dark');
       }}
     >
       Add 1 to {state}?

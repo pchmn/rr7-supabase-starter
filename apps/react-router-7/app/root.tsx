@@ -15,14 +15,13 @@ import {
   PreventFlashOnWrongTheme,
   ThemeProvider,
   useTheme,
-} from 'remix-themes';
+} from '@monorepo-template/ssr-theme';
+import { getThemeFromSession } from '@monorepo-template/ssr-theme/react-router';
 import type { Route } from './+types/root';
-import { themeSessionResolver } from './lib/theme/session.server';
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const { getTheme } = await themeSessionResolver(request);
-
-  return { theme: getTheme() };
+  const theme = await getThemeFromSession(request);
+  return { theme };
 }
 
 export const links: Route.LinksFunction = () => [

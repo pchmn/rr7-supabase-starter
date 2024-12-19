@@ -1,3 +1,4 @@
+import { useTheme } from '@monorepo-template/ssr-theme';
 import { Button } from '@monorepo-template/ui/button';
 import type { Route } from './+types/_index';
 
@@ -9,9 +10,17 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+  const [theme, setTheme] = useTheme();
+
   return (
     <div>
-      <Button>Click me</Button>
+      <Button
+        onClick={() => {
+          setTheme(theme === 'dark' ? 'light' : 'dark');
+        }}
+      >
+        Click me
+      </Button>
     </div>
   );
 }

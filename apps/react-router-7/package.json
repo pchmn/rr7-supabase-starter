@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "files": [
-    "build",
-    "public/locales"
-  ],
+  "files": ["build", "public/locales"],
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev --host",
@@ -14,6 +11,7 @@
     "typecheck": "react-router typegen && tsc --build --noEmit"
   },
   "dependencies": {
+    "@monorepo-template/ssr-theme": "workspace:*",
     "@monorepo-template/ui": "workspace:*",
     "@react-router/fs-routes": "^7.0.2",
     "@react-router/node": "^7.0.1",

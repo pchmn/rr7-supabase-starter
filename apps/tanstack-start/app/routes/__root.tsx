@@ -1,12 +1,32 @@
-// import uiCss from 'app/routes/styles.css?url';
+import {
+  PreventFlashOnWrongTheme,
+  ThemeProvider,
+  useTheme,
+} from '@monorepo-template/ssr-theme';
+import {
+  getThemeFromSession,
+  themeHandler,
+  themeValidator,
+} from '@monorepo-template/ssr-theme/tanstart';
 import uiCss from '@monorepo-template/ui/style.css?url';
 import {
   Outlet,
   ScrollRestoration,
   createRootRoute,
 } from '@tanstack/react-router';
-import { Meta, Scripts } from '@tanstack/start';
+import { Meta, Scripts, createServerFn } from '@tanstack/start';
 import type { ReactNode } from 'react';
+
+const getTheme = createServerFn({
+  method: 'GET',
+}).handler(async () => {
+  const theme = await getThemeFromSession();
+  return { theme };
+});
+
+const updateTheme = createServerFn({ method: 'POST' })
+  .validator(themeValidator)
+  .handler(themeHandler);
 
 export const Route = createRootRoute({
   head: () => ({
@@ -24,22 +44,30 @@ export const Route = createRootRoute({
     ],
     links: [{ rel: 'stylesheet', href: uiCss }],
   }),
+  beforeLoad: () => getTheme(),
   component: RootComponent,
 });
 
 function RootComponent() {
+  const { theme } = Route.useRouteContext();
+
   return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
+    <ThemeProvider specifiedTheme={theme} themeAction={updateTheme}>
+      <RootDocument>
+        <Outlet />
+      </RootDocument>
+    </ThemeProvider>
   );
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const [theme] = useTheme();
+
   return (
-    <html lang='en'>
+    <html lang='en' className={theme ?? ''}>
       <head>
         <Meta />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(theme)} />
       </head>
       <body>
         {children}

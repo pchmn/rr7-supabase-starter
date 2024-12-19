@@ -1,4 +1,3 @@
-import { createThemeAction } from 'remix-themes';
-import { themeSessionResolver } from '~/lib/theme/session.server';
+import { createThemeAction } from '@monorepo-template/ssr-theme/react-router';
 
-export const action = createThemeAction(themeSessionResolver);
+export const action = createThemeAction;
