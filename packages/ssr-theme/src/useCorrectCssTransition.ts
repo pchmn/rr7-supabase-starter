@@ -1,7 +1,7 @@
-import {useCallback} from 'react'
+import { useCallback } from 'react';
 
 function withoutTransition(callback: Function) {
-  const css = document.createElement('style')
+  const css = document.createElement('style');
   css.appendChild(
     document.createTextNode(
       `* {
@@ -12,32 +12,32 @@ function withoutTransition(callback: Function) {
        transition: none !important;
     }`,
     ),
-  )
-  document.head.appendChild(css)
+  );
+  document.head.appendChild(css);
 
-  callback()
+  callback();
 
   setTimeout(() => {
     // Calling getComputedStyle forces the browser to redraw
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const _ = window.getComputedStyle(css).transition
-    document.head.removeChild(css)
-  }, 0)
+    const _ = window.getComputedStyle(css).transition;
+    document.head.removeChild(css);
+  }, 0);
 }
 
 export function useCorrectCssTransition({
   disableTransitions = false,
-}: {disableTransitions?: boolean} = {}) {
+}: { disableTransitions?: boolean } = {}) {
   return useCallback(
     (callback: Function) => {
       if (disableTransitions) {
         withoutTransition(() => {
-          callback()
-        })
+          callback();
+        });
       } else {
-        callback()
+        callback();
       }
     },
     [disableTransitions],
-  )
+  );
 }
