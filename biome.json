@@ -10,6 +10,9 @@
       "a11y": {
         "noSvgWithoutTitle": "off",
         "useKeyWithClickEvents": "off"
+      },
+      "complexity": {
+        "noForEach": "off"
       }
     }
   },

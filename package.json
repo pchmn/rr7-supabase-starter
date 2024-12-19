@@ -10,6 +10,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "turbo dev",
+    "sup:start": "supabase start",
+    "sup:stop": "supabase stop",
+    "sup:restart": "pnpm sup:stop && pnpm sup:start",
+    "sup:types": "supabase gen types --lang=typescript --local > packages/supabase/src/database-generated.types.ts",
     "format": "biome format --write .",
     "clean": "npx npkill",
     "list-mismatches": "npx syncpack list-mismatches --types dev,prod,peer",
