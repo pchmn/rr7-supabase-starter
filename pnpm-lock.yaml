@@ -87,6 +87,9 @@ importers:
       '@monorepo-template/ssr-theme':
         specifier: workspace:*
         version: link:../../packages/ssr-theme
+      '@monorepo-template/supabase':
+        specifier: workspace:*
+        version: link:../../packages/supabase
       '@monorepo-template/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -140,7 +143,7 @@ importers:
         specifier: ^5.6.3
         version: 5.6.3
       vite-tsconfig-paths:
-        specifier: ^5.1.2
+        specifier: ^5.1.3
         version: 5.1.3(typescript@5.6.3)(vite@6.0.2(@types/node@20.17.7)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))
 
   packages/ssr-theme:

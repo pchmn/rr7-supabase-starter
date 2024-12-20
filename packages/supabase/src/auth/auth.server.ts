@@ -6,7 +6,32 @@ import {
 } from '@supabase/supabase-js';
 import { createSupabaseServerClient } from '../client/client.server';
 
-export async function getUser() {
+export type SerializedUser = Omit<User, 'factors'>;
+
+export function serializeUser(user: User | null) {
+  if (!user) {
+    return null;
+  }
+  return {
+    ...user,
+    factors: undefined,
+  } as SerializedUser;
+}
+
+export function serializeAuthError(error: AuthError | null) {
+  if (!error) {
+    return null;
+  }
+  return {
+    name: error.name,
+    message: error.message,
+    code: error.code as string,
+    status: error.status,
+    stack: error.stack,
+  };
+}
+
+export async function getCurrentUser() {
   const supabase = createSupabaseServerClient();
 
   const {
@@ -14,7 +39,11 @@ export async function getUser() {
     error,
   } = await supabase.auth.getUser();
 
-  return { supabase, user, error };
+  return {
+    supabase,
+    user: serializeUser(user),
+    error: serializeAuthError(error),
+  };
 }
 
 export async function updateCurrentUser(attributes: UserAttributes) {
@@ -25,7 +54,7 @@ export async function updateCurrentUser(attributes: UserAttributes) {
     error,
   } = await supabase.auth.updateUser(attributes);
 
-  return { user, error };
+  return { user: serializeUser(user), error: serializeAuthError(error) };
 }
 
 export async function deleteCurrentUser() {
@@ -43,7 +72,7 @@ export async function deleteCurrentUser() {
 
   const { error } = await supabase.auth.admin.deleteUser(user.id);
 
-  return { error };
+  return { error: serializeAuthError(error) };
 }
 
 export async function generateMagicLink(email: string) {
@@ -58,15 +87,21 @@ export async function generateMagicLink(email: string) {
       type: 'magiclink',
     });
 
-    return { properties, user, error };
+    return {
+      properties,
+      user: serializeUser(user),
+      error: serializeAuthError(error),
+    };
   } catch (unexpectedError) {
     return {
       properties: null,
       user: null,
-      error: new AuthError(
-        unexpectedError.message ?? 'Unknown error',
-        500,
-        'unknown_error',
+      error: serializeAuthError(
+        new AuthError(
+          unexpectedError.message ?? 'Unknown error',
+          500,
+          'unknown_error',
+        ),
       ),
     };
   }
@@ -78,13 +113,15 @@ export async function signOut() {
   try {
     const { error } = await supabase.auth.signOut();
 
-    return { error };
+    return { error: serializeAuthError(error) };
   } catch (unexpectedError) {
     return {
-      error: new AuthError(
-        unexpectedError.message ?? 'Unknown error',
-        500,
-        'unknown_error',
+      error: serializeAuthError(
+        new AuthError(
+          unexpectedError.message ?? 'Unknown error',
+          500,
+          'unknown_error',
+        ),
       ),
     };
   }
@@ -115,14 +152,16 @@ export async function verifyEmailOtp(
       await callback.onSuccess(supabase, user);
     }
 
-    return { user, error };
+    return { user: serializeUser(user), error: serializeAuthError(error) };
   } catch (unexpectedError) {
     return {
       user: null,
-      error: new AuthError(
-        unexpectedError.message ?? 'Unknown error',
-        500,
-        'unknown_error',
+      error: serializeAuthError(
+        new AuthError(
+          unexpectedError.message ?? 'Unknown error',
+          500,
+          'unknown_error',
+        ),
       ),
     };
   }
@@ -149,14 +188,16 @@ export async function verifyEmailToken(
       await callback.onSuccess(supabase, user);
     }
 
-    return { user, error };
+    return { user: serializeUser(user), error: serializeAuthError(error) };
   } catch (unexpectedError) {
     return {
       user: null,
-      error: new AuthError(
-        unexpectedError.message ?? 'Unknown error',
-        500,
-        'unknown_error',
+      error: serializeAuthError(
+        new AuthError(
+          unexpectedError.message ?? 'Unknown error',
+          500,
+          'unknown_error',
+        ),
       ),
     };
   }
@@ -183,14 +224,16 @@ export async function verifyOauthCode(
       await callback.onSuccess(supabase, user);
     }
 
-    return { user, error };
+    return { user: serializeUser(user), error: serializeAuthError(error) };
   } catch (unexpectedError) {
     return {
       user: null,
-      error: new AuthError(
-        unexpectedError.message ?? 'Unknown error',
-        500,
-        'unknown_error',
+      error: serializeAuthError(
+        new AuthError(
+          unexpectedError.message ?? 'Unknown error',
+          500,
+          'unknown_error',
+        ),
       ),
     };
   }

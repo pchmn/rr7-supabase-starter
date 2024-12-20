@@ -5,9 +5,7 @@ export default defineConfig({
   server: {
     preset: 'node-server',
   },
-
   vite: {
-    // @ts-expect-error - No types for vite-tsconfig-paths
     plugins: [tsconfigPaths()],
   },
 });

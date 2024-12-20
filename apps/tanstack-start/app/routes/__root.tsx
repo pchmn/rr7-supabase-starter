@@ -8,6 +8,7 @@ import {
   themeHandler,
   themeValidator,
 } from '@monorepo-template/ssr-theme/tanstart';
+import { getCurrentUser } from '@monorepo-template/supabase/auth.server';
 import uiCss from '@monorepo-template/ui/style.css?url';
 import {
   Outlet,
@@ -17,11 +18,12 @@ import {
 import { Meta, Scripts, createServerFn } from '@tanstack/start';
 import type { ReactNode } from 'react';
 
-const getTheme = createServerFn({
+const loader = createServerFn({
   method: 'GET',
 }).handler(async () => {
   const theme = await getThemeFromSession();
-  return { theme };
+  const { user, error } = await getCurrentUser();
+  return { theme, user, error };
 });
 
 const updateTheme = createServerFn({ method: 'POST' })
@@ -44,12 +46,13 @@ export const Route = createRootRoute({
     ],
     links: [{ rel: 'stylesheet', href: uiCss }],
   }),
-  beforeLoad: () => getTheme(),
+  beforeLoad: () => loader(),
   component: RootComponent,
 });
 
 function RootComponent() {
   const { theme } = Route.useRouteContext();
+  // console.log(user);
 
   return (
     <ThemeProvider specifiedTheme={theme} themeAction={updateTheme}>
