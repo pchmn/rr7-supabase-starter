@@ -22,8 +22,8 @@ inputs:
   application-name:
     description: The Dokploy application name
     required: true
-  application-url:
-    description: The Dokploy application URL
+  application-domain:
+    description: The Dokploy application domain
     required: false
   docker-image:
     description: The Docker image to deploy

@@ -45,6 +45,7 @@ async function deploy() {
   const application = await getOrCreateApplication({
     applicationId: config.applicationId,
     applicationName: config.applicationName,
+    applicationDomain: config.applicationDomain,
     projectId: config.projectId,
     dockerPort: config.dockerPort,
   });
@@ -78,9 +79,7 @@ async function deploy() {
     core.debug('Waiting for deployment to be done...');
     await waitForDeploymentToBeDone(application.applicationId);
 
-    const applicationUrl =
-      config.applicationUrl ||
-      (await getApplicationUrl(application.applicationId));
+    const applicationUrl = await getApplicationUrl(application.applicationId);
     if (config.commentPr) {
       core.debug('Setting pull request comment...');
       await setPullRequestComment(octokit, {
