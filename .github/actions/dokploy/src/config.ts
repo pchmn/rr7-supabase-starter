@@ -8,6 +8,7 @@ export function getConfig() {
     projectId: core.getInput('project-id', { required: true }),
     applicationId: core.getInput('application-id'),
     applicationName: core.getInput('application-name', { required: true }),
+    applicationUrl: core.getInput('application-url'),
     dockerImage: core.getInput('docker-image'),
     dockerUsername: core.getInput('docker-username'),
     dockerPassword: core.getInput('docker-password'),
