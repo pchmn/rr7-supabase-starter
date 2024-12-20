@@ -13,11 +13,13 @@ import { toKebabCase } from '../utils/string';
 export async function getOrCreateApplication({
   applicationId,
   applicationName,
+  applicationDomain,
   projectId,
   dockerPort,
 }: {
   applicationId: string;
   applicationName: string;
+  applicationDomain?: string;
   projectId: string;
   dockerPort: string;
 }) {
@@ -40,10 +42,12 @@ export async function getOrCreateApplication({
     },
   });
   if (application) {
-    const domain = await generateDomain({
-      appName: (application as Application).name,
-      projectName: (project as Project).name,
-    });
+    const domain =
+      applicationDomain ||
+      (await generateDomain({
+        appName: (application as Application).name,
+        projectName: (project as Project).name,
+      }));
 
     await domainCreate({
       body: {

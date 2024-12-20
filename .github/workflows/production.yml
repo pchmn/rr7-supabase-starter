@@ -72,7 +72,7 @@ jobs:
           dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
           project-id: 0_G71Uh8nHwvaHXw0eqew
           application-name: Production
-          application-url: https://monorepo-template.pchmn.dev
+          application-domain: monorepo-template.pchmn.dev
           docker-image: pchmn/monorepo-template-tanstack-start:${{ needs.build.outputs.tag_name }}
           docker-port: 8080
           env: |

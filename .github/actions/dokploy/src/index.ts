@@ -78,9 +78,7 @@ async function deploy() {
     core.debug('Waiting for deployment to be done...');
     await waitForDeploymentToBeDone(application.applicationId);
 
-    const applicationUrl =
-      config.applicationUrl ||
-      (await getApplicationUrl(application.applicationId));
+    const applicationUrl = await getApplicationUrl(application.applicationId);
     if (config.commentPr) {
       core.debug('Setting pull request comment...');
       await setPullRequestComment(octokit, {
