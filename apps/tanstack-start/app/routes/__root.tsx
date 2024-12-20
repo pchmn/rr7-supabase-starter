@@ -16,13 +16,18 @@ import {
 } from '@tanstack/react-router';
 import { Meta, Scripts, createServerFn } from '@tanstack/start';
 import type { ReactNode } from 'react';
+import { authMiddleware } from '~/middlewares/authMiddleware';
 
-const getTheme = createServerFn({
+const loader = createServerFn({
   method: 'GET',
-}).handler(async () => {
-  const theme = await getThemeFromSession();
-  return { theme };
-});
+})
+  .middleware([authMiddleware])
+  .handler(async ({ context }) => {
+    const theme = await getThemeFromSession();
+    const user = await context.supabase.auth.getUser();
+    console.log('USER', user);
+    return { theme, user: context.user };
+  });
 
 const updateTheme = createServerFn({ method: 'POST' })
   .validator(themeValidator)
@@ -44,12 +49,12 @@ export const Route = createRootRoute({
     ],
     links: [{ rel: 'stylesheet', href: uiCss }],
   }),
-  beforeLoad: () => getTheme(),
+  beforeLoad: () => loader(),
   component: RootComponent,
 });
 
 function RootComponent() {
-  const { theme } = Route.useRouteContext();
+  const { theme, user } = Route.useRouteContext();
 
   return (
     <ThemeProvider specifiedTheme={theme} themeAction={updateTheme}>
