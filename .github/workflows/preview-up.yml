@@ -36,7 +36,6 @@ jobs:
           file: ./apps/tanstack-start/.docker/Dockerfile
           tags: pchmn/monorepo-template-tanstack-start:${{ github.sha}}
           push: true
-          platforms: linux/amd64,linux/arm64
 
   deploy:
     name: 🚀 Deploy to Dokploy
