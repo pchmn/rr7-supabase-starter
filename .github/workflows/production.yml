@@ -52,6 +52,7 @@ jobs:
           context: .
           file: ./apps/tanstack-start/.docker/Dockerfile
           tags: pchmn/monorepo-template-tanstack-start:${{ needs.create_tag.outputs.tag_name }}
+          push: true
 
     outputs:
       tag_name: ${{ needs.create_tag.outputs.tag_name }}
