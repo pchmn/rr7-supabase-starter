@@ -24,6 +24,8 @@ const loader = createServerFn({
   .middleware([authMiddleware])
   .handler(async ({ context }) => {
     const theme = await getThemeFromSession();
+    const user = await context.supabase.auth.getUser();
+    console.log('USER', user);
     return { theme, user: context.user };
   });
 
@@ -53,7 +55,6 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   const { theme, user } = Route.useRouteContext();
-  console.log(user);
 
   return (
     <ThemeProvider specifiedTheme={theme} themeAction={updateTheme}>

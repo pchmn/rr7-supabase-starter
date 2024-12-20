@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "files": [
-    ".output",
-    ".vinxi"
-  ],
+  "files": [".output", ".vinxi"],
   "scripts": {
     "dev": "PORT=5174 vinxi dev --host",
     "build": "vinxi build",
@@ -20,8 +17,8 @@
     "@monorepo-template/ssr-theme": "workspace:*",
     "@monorepo-template/supabase": "workspace:*",
     "@monorepo-template/ui": "workspace:*",
-    "@tanstack/react-router": "^1.91.0",
-    "@tanstack/start": "^1.91.0",
+    "@tanstack/react-router": "^1.91.3",
+    "@tanstack/start": "^1.91.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.464.0",
