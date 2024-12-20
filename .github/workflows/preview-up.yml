@@ -58,6 +58,5 @@ jobs:
           docker-image: pchmn/monorepo-template-tanstack-start:${{ github.sha }}
           docker-port: 8080
           env: |
-            TEST_ENV=true
             SUPABASE_URL=${{ secrets.PREVIEW_SUPABASE_URL }}
             SUPABASE_ANON_KEY=${{ secrets.PREVIEW_SUPABASE_ANON_KEY }}
