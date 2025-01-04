@@ -1,3 +1,4 @@
+import { useRouter } from '@tanstack/react-router';
 import { type ReactNode, createContext, useContext } from 'react';
 import type { Translation } from '../types/i18nConfig';
 
@@ -33,6 +34,7 @@ type NestedKeyOf<ObjectType extends object> = {
 }[keyof ObjectType & (string | number)];
 
 export const useTranslation = <T extends Translation>() => {
+  const router = useRouter();
   const context = useContext(I18nContext);
   if (!context) {
     throw new Error('useTranslation must be used within an I18nProvider');
@@ -59,6 +61,7 @@ export const useTranslation = <T extends Translation>() => {
 
   const setLocale = async (locale: string) => {
     await context.localeAction({ data: { locale } });
+    router.invalidate();
   };
 
   return {

@@ -154,6 +154,9 @@ importers:
       '@monorepo-template/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@tanstack/react-router':
+        specifier: ^1.95.0
+        version: 1.95.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/start':
         specifier: ^1.95.0
         version: 1.95.0(@types/node@20.17.7)(ioredis@5.4.1)(jiti@2.4.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.36.0)(tsx@4.19.2)(typescript@5.6.3)(vite@6.0.2(@types/node@20.17.7)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(yaml@2.6.1)
