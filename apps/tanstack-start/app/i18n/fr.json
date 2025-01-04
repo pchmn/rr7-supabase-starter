@@ -1,0 +1,7 @@
+{
+  "hello": "Bonjour",
+  "world": "Monde",
+  "home": {
+    "title": "Accueil"
+  }
+}

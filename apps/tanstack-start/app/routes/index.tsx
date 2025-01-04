@@ -1,4 +1,5 @@
-import { useTheme } from '@monorepo-template/ssr-theme';
+import { useTranslation } from '@monorepo-template/i18n/react';
+import { useTheme } from '@monorepo-template/ssr-theme/react';
 import { Button } from '@monorepo-template/ui/button';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/start';
@@ -35,13 +36,26 @@ function Home() {
   const state = Route.useLoaderData();
   const [theme, setTheme] = useTheme();
 
+  const { t, setLocale, locale } = useTranslation();
+
   return (
-    <Button
-      onClick={() => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
-      }}
-    >
-      Add 1 to {state}?
-    </Button>
+    <>
+      <Button
+        onClick={() => {
+          setTheme(theme === 'dark' ? 'light' : 'dark');
+        }}
+      >
+        {t('hello')} {t('world')}
+        {t('home.title')}
+      </Button>
+      <Button
+        onClick={async () => {
+          await setLocale(locale === 'en' ? 'fr' : 'en');
+          router.invalidate();
+        }}
+      >
+        {locale}
+      </Button>
+    </>
   );
 }

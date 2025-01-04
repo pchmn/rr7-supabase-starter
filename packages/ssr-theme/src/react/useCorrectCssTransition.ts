@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-function withoutTransition(callback: Function) {
+function withoutTransition(callback: () => void) {
   const css = document.createElement('style');
   css.appendChild(
     document.createTextNode(
@@ -29,7 +29,7 @@ export function useCorrectCssTransition({
   disableTransitions = false,
 }: { disableTransitions?: boolean } = {}) {
   return useCallback(
-    (callback: Function) => {
+    (callback: () => void) => {
       if (disableTransitions) {
         withoutTransition(() => {
           callback();

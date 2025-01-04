@@ -1,5 +1,5 @@
 import { type CookieSerializeOptions, useSession } from 'vinxi/http';
-import { type Theme, isTheme } from '../theme-provider';
+import { type Theme, isTheme } from '../react/ThemeProvider';
 
 const COOKIE_NAME = '__tanstart_theme';
 const COOKIE_PASSWORD =

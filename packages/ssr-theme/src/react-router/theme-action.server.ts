@@ -1,5 +1,5 @@
 import { type ActionFunction, createCookieSessionStorage } from 'react-router';
-import { type Theme, isTheme } from '../theme-provider';
+import { type Theme, isTheme } from '../react/ThemeProvider';
 
 type ThemeSession = {
   getTheme: () => Theme | null;

@@ -1,5 +1,5 @@
-import { useEffect, useCallback, useRef } from 'react';
 import type { MutableRefObject } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export function useBroadcastChannel<T = string>(
   channelName: string,
@@ -8,19 +8,16 @@ export function useBroadcastChannel<T = string>(
 ): (data: T) => void {
   const channelRef = useRef(
     typeof window !== 'undefined' && 'BroadcastChannel' in window
-      ? new BroadcastChannel(channelName + '-channel')
+      ? new BroadcastChannel(`${channelName}-channel`)
       : null,
   );
 
   useChannelEventListener(channelRef, 'message', handleMessage);
   useChannelEventListener(channelRef, 'messageerror', handleMessageError);
 
-  return useCallback(
-    (data: T) => {
-      channelRef?.current?.postMessage(data);
-    },
-    [channelRef],
-  );
+  return useCallback((data: T) => {
+    channelRef?.current?.postMessage(data);
+  }, []);
 }
 
 function useChannelEventListener<K extends keyof BroadcastChannelEventMap>(

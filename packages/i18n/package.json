@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-template/ssr-theme",
+  "name": "@monorepo-template/i18n",
   "version": "0.0.1",
   "private": true,
   "author": "pchmn",
@@ -9,7 +9,6 @@
   },
   "peerDependencies": {
     "@tanstack/start": "^1.95.0",
-    "react-router": "^7.0.1",
     "vinxi": "^0.5.1"
   },
   "devDependencies": {
@@ -18,12 +17,12 @@
     "@types/node": "^20",
     "@types/react": "^18.3.12",
     "react": "^19.0.0",
-    "react-router": "^7.0.1",
     "vinxi": "^0.5.1"
   },
   "exports": {
-    "./react": "./src/react/index.ts",
-    "./tanstart": "./src/tanstart/theme-action.server.ts",
-    "./react-router": "./src/react-router/theme-action.server.ts"
+    ".": "./src/index.ts",
+    "./tanstart": "./src/tanstart/utils.server.ts",
+    "./react": "./src/react/I18nProvider.tsx",
+    "./types": "./src/types/i18nConfig.ts"
   }
 }

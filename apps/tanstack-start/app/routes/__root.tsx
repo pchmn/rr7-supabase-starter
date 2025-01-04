@@ -1,8 +1,14 @@
+import { I18nProvider } from '@monorepo-template/i18n/react';
+import {
+  loadTranslation,
+  localeHandler,
+  localeValidator,
+} from '@monorepo-template/i18n/tanstart';
 import {
   PreventFlashOnWrongTheme,
   ThemeProvider,
   useTheme,
-} from '@monorepo-template/ssr-theme';
+} from '@monorepo-template/ssr-theme/react';
 import {
   getThemeFromSession,
   themeHandler,
@@ -16,6 +22,7 @@ import {
 } from '@tanstack/react-router';
 import { Meta, Scripts, createServerFn } from '@tanstack/start';
 import type { ReactNode } from 'react';
+import { i18nConfig } from '~/i18n/i18n.server';
 import { authMiddleware } from '~/middlewares/authMiddleware';
 
 const loader = createServerFn({
@@ -25,13 +32,18 @@ const loader = createServerFn({
   .handler(async ({ context }) => {
     const theme = await getThemeFromSession();
     const user = await context.supabase.auth.getUser();
-    console.log('USER', user);
-    return { theme, user: context.user };
+    const { locale, translation } = await loadTranslation(i18nConfig);
+    console.log('LOCALE', locale, translation);
+    return { theme, user: context.user, locale, translation };
   });
 
 const updateTheme = createServerFn({ method: 'POST' })
   .validator(themeValidator)
   .handler(themeHandler);
+
+const updateLocale = createServerFn({ method: 'POST' })
+  .validator(localeValidator)
+  .handler(localeHandler);
 
 export const Route = createRootRoute({
   head: () => ({
@@ -54,13 +66,18 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const { theme, user } = Route.useRouteContext();
+  const { theme, user, locale, translation } = Route.useRouteContext();
+  console.log('LOCALE', locale, translation);
 
   return (
     <ThemeProvider specifiedTheme={theme} themeAction={updateTheme}>
-      <RootDocument>
-        <Outlet />
-      </RootDocument>
+      <I18nProvider
+        config={{ locale, translation, localeAction: updateLocale }}
+      >
+        <RootDocument>
+          <Outlet />
+        </RootDocument>
+      </I18nProvider>
     </ThemeProvider>
   );
 }
