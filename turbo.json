@@ -2,6 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
+      "env": ["APP_VERSION", "APP_VERSION_DATE"],
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", "build/**", ".output/**", ".vinxi/**"]

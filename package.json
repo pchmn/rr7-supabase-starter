@@ -1,5 +1,6 @@
 {
   "name": "rr7-supabase-starter",
+  "version": "0.4.0",
   "private": true,
   "author": "pchmn",
   "repository": {
@@ -16,15 +17,19 @@
     "sup:types": "supabase gen types --lang=typescript --local > packages/supabase/src/types/database-generated.types.ts && biome format --write packages/supabase/src/types/database-generated.types.ts",
     "format": "biome format --write .",
     "clean": "npx npkill",
+    "release": "release-it",
     "list-mismatches": "npx syncpack list-mismatches --types dev,prod,peer",
     "fix-mismatches": "npx syncpack fix-mismatches --types dev,prod,peer"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@release-it-plugins/workspaces": "^4.2.0",
+    "@release-it/conventional-changelog": "^9.0.4",
+    "release-it": "^17.11.0",
     "turbo": "^2.3.1"
   },
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@9.15.3",
   "engines": {
-    "node": ">=22.11.0"
+    "node": ">=22.13.0"
   }
 }

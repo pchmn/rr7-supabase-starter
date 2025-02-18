@@ -24,7 +24,7 @@ The monorepo is organized into two main directories:
 
 1. Clone this repository
 2. Install dependencies: `pnpm i`
-3. Replace all occurrences of `monorepo-template` by your own project name
+3. Replace all occurrences of `rr7-supabase-starter` by your own project name
 
 ## CI
 

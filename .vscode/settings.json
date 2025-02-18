@@ -19,5 +19,7 @@
   },
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "i18n-ally.localesPaths": ["apps/web/app/i18n/locales"],
+  "i18n-ally.enabledFrameworks": ["react"]
 }

@@ -1,0 +1,80 @@
+{
+  "common": {
+    "goHome": "Go home",
+    "oops": "Oops!",
+    "and": "and",
+    "or": "or"
+  },
+  "confirmModal": {
+    "title": "Are you sure?",
+    "description": "This action cannot be undone.",
+    "confirmLabel": "Confirm",
+    "cancelLabel": "Cancel"
+  },
+  "error": {
+    "unknownError": "Oops! Something went wrong. Please try again."
+  },
+  "header": {
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": {
+      "title": "Language",
+      "en": "English",
+      "fr": "Français"
+    },
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "account": "Account"
+  },
+  "index": {
+    "dontLoseYourProgress": "Don't loose your progress!",
+    "signIn": "Sign in"
+  },
+  "auth": {
+    "signIn": {
+      "meta": {
+        "title": "Sign in • rr7-supabase-starter",
+        "description": "Sign in to rr7-supabase-starter"
+      },
+      "title": "Sign in to rr7-supabase-starter",
+      "subtitle": "Keep track of your knowledge",
+      "signInWithGoogle": "Continue with Google",
+      "acceptTermsAndConditions": "By proceeding, you confirm your understanding and acceptance of our",
+      "termsAndConditions": "Terms and Conditions",
+      "privacyPolicy": "Privacy Policy",
+      "oauthError": "We couldn't sign you in. Please try again.",
+      "alreadySignedIn": "You are already signed in"
+    }
+  },
+  "account": {
+    "title": "Account",
+    "signOut": "Sign out",
+    "meta": {
+      "title": "Account • rr7-supabase-starter",
+      "description": "Manage your rr7-supabase-starter account"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Change the language of the interface.",
+      "en": "English",
+      "fr": "Français"
+    },
+    "theme": {
+      "title": "Theme",
+      "description": "Change the theme of the interface.",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "deleteAccount": {
+      "title": "Delete account",
+      "description": "This action cannot be undone. This will permanently delete your account and all your data.",
+      "confirmLabel": "Delete account",
+      "cancelLabel": "Cancel"
+    }
+  }
+}
