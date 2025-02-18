@@ -1,5 +1,5 @@
-import { useTheme } from '@monorepo-template/ssr-theme';
-import { Button } from '@monorepo-template/ui/button';
+import { useTheme } from '@rr7-supabase-starter/ssr-theme';
+import { Button } from '@rr7-supabase-starter/ui/button';
 import type { Route } from './+types/_index';
 
 export function meta({}: Route.MetaArgs) {

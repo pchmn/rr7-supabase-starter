@@ -8,15 +8,15 @@ import {
   useLoaderData,
 } from 'react-router';
 
-import '@monorepo-template/ui/style.css';
+import '@rr7-supabase-starter/ui/style.css';
 import './app.css';
 
 import {
   PreventFlashOnWrongTheme,
   ThemeProvider,
   useTheme,
-} from '@monorepo-template/ssr-theme';
-import { getThemeFromSession } from '@monorepo-template/ssr-theme/react-router';
+} from '@rr7-supabase-starter/ssr-theme';
+import { getThemeFromSession } from '@rr7-supabase-starter/ssr-theme/react-router';
 import type { Route } from './+types/root';
 
 export async function loader({ request }: Route.LoaderArgs) {

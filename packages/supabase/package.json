@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-template/supabase",
+  "name": "@rr7-supabase-starter/supabase",
   "version": "0.0.1",
   "private": true,
   "scripts": {},
@@ -11,7 +11,7 @@
     "vinxi": "^0.5.1"
   },
   "devDependencies": {
-    "@monorepo-template/tsconfig": "workspace:*",
+    "@rr7-supabase-starter/tsconfig": "workspace:*",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.10",
     "tiny-invariant": "^1.3.3",

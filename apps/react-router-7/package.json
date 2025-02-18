@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-template/react-router-7",
+  "name": "@rr7-supabase-starter/react-router-7",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
     "typecheck": "react-router typegen && tsc --build --noEmit"
   },
   "dependencies": {
-    "@monorepo-template/ssr-theme": "workspace:*",
-    "@monorepo-template/ui": "workspace:*",
+    "@rr7-supabase-starter/ssr-theme": "workspace:*",
+    "@rr7-supabase-starter/ui": "workspace:*",
     "@react-router/fs-routes": "^7.0.2",
     "@react-router/node": "^7.0.1",
     "@react-router/serve": "^7.0.1",
@@ -23,7 +23,7 @@
     "remix-themes": "^1.5.1"
   },
   "devDependencies": {
-    "@monorepo-template/tsconfig": "workspace:*",
+    "@rr7-supabase-starter/tsconfig": "workspace:*",
     "@react-router/dev": "^7.0.1",
     "@types/node": "^20",
     "@types/react": "^18.3.12",
@@ -35,5 +35,5 @@
     "vite": "^5.4.11",
     "vite-tsconfig-paths": "^5.1.2"
   },
-  "packageManager": "pnpm@9.14.2"
+  "packageManager": "pnpm@10.4.1"
 }

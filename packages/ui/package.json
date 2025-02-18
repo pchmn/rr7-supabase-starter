@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-template/ui",
+  "name": "@rr7-supabase-starter/ui",
   "version": "0.0.1",
   "private": true,
   "author": "pchmn",
@@ -9,7 +9,7 @@
     "format": "biome format --write ."
   },
   "devDependencies": {
-    "@monorepo-template/tsconfig": "workspace:*",
+    "@rr7-supabase-starter/tsconfig": "workspace:*",
     "@types/node": "^20",
     "@types/react": "^18.3.12",
     "autoprefixer": "^10.4.20",

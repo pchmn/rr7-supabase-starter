@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-template/ssr-theme",
+  "name": "@rr7-supabase-starter/ssr-theme",
   "version": "0.0.1",
   "private": true,
   "author": "pchmn",
@@ -13,7 +13,7 @@
     "vinxi": "^0.5.0"
   },
   "devDependencies": {
-    "@monorepo-template/tsconfig": "workspace:*",
+    "@rr7-supabase-starter/tsconfig": "workspace:*",
     "@tanstack/start": "^1.85.4",
     "@types/node": "^20",
     "@types/react": "^18.3.12",

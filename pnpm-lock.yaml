@@ -17,10 +17,10 @@ importers:
 
   apps/react-router-7:
     dependencies:
-      '@monorepo-template/ssr-theme':
+      '@rr7-supabase-starter/ssr-theme':
         specifier: workspace:*
         version: link:../../packages/ssr-theme
-      '@monorepo-template/ui':
+      '@rr7-supabase-starter/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@react-router/fs-routes':
@@ -48,7 +48,7 @@ importers:
         specifier: ^1.5.1
         version: 1.5.1(@remix-run/react@2.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.15.0(typescript@5.6.3))
     devDependencies:
-      '@monorepo-template/tsconfig':
+      '@rr7-supabase-starter/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
       '@react-router/dev':
@@ -84,13 +84,13 @@ importers:
 
   apps/tanstack-start:
     dependencies:
-      '@monorepo-template/ssr-theme':
+      '@rr7-supabase-starter/ssr-theme':
         specifier: workspace:*
         version: link:../../packages/ssr-theme
-      '@monorepo-template/supabase':
+      '@rr7-supabase-starter/supabase':
         specifier: workspace:*
         version: link:../../packages/supabase
-      '@monorepo-template/ui':
+      '@rr7-supabase-starter/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-router':
@@ -124,7 +124,7 @@ importers:
         specifier: ^0.5.1
         version: 0.5.1(@types/node@20.17.7)(ioredis@5.4.1)(jiti@2.4.1)(terser@5.36.0)(tsx@4.19.2)(typescript@5.6.3)(yaml@2.6.1)
     devDependencies:
-      '@monorepo-template/tsconfig':
+      '@rr7-supabase-starter/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
       '@types/react':
@@ -148,7 +148,7 @@ importers:
 
   packages/ssr-theme:
     devDependencies:
-      '@monorepo-template/tsconfig':
+      '@rr7-supabase-starter/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@tanstack/start':
@@ -172,7 +172,7 @@ importers:
 
   packages/supabase:
     devDependencies:
-      '@monorepo-template/tsconfig':
+      '@rr7-supabase-starter/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@supabase/ssr':
@@ -199,7 +199,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.3.12)(react@18.3.1)
     devDependencies:
-      '@monorepo-template/tsconfig':
+      '@rr7-supabase-starter/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       '@types/node':

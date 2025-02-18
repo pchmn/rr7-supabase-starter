@@ -2,13 +2,13 @@ import {
   PreventFlashOnWrongTheme,
   ThemeProvider,
   useTheme,
-} from '@monorepo-template/ssr-theme';
+} from '@rr7-supabase-starter/ssr-theme';
 import {
   getThemeFromSession,
   themeHandler,
   themeValidator,
-} from '@monorepo-template/ssr-theme/tanstart';
-import uiCss from '@monorepo-template/ui/style.css?url';
+} from '@rr7-supabase-starter/ssr-theme/tanstart';
+import uiCss from '@rr7-supabase-starter/ui/style.css?url';
 import {
   Outlet,
   ScrollRestoration,

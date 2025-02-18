@@ -1,5 +1,5 @@
-import { useTheme } from '@monorepo-template/ssr-theme';
-import { Button } from '@monorepo-template/ui/button';
+import { useTheme } from '@rr7-supabase-starter/ssr-theme';
+import { Button } from '@rr7-supabase-starter/ui/button';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/start';
 import * as fs from 'node:fs';

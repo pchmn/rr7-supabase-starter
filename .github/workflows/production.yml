@@ -51,7 +51,7 @@ jobs:
           # Docker build
           context: .
           file: ./apps/tanstack-start/.docker/Dockerfile
-          tags: pchmn/monorepo-template-tanstack-start:${{ needs.create_tag.outputs.tag_name }}
+          tags: pchmn/rr7-supabase-starter-tanstack-start:${{ needs.create_tag.outputs.tag_name }}
           push: true
 
     outputs:
@@ -71,8 +71,8 @@ jobs:
           dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
           project-id: 0_G71Uh8nHwvaHXw0eqew
           application-name: Production
-          application-domain: monorepo-template.pchmn.dev
-          docker-image: pchmn/monorepo-template-tanstack-start:${{ needs.build.outputs.tag_name }}
+          application-domain: rr7-supabase-starter.pchmn.dev
+          docker-image: pchmn/rr7-supabase-starter-tanstack-start:${{ needs.build.outputs.tag_name }}
           docker-port: 8080
           env: |
             SUPABASE_URL=${{ secrets.SUPABASE_URL }}

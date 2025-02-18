@@ -34,7 +34,7 @@ jobs:
           # Docker build
           context: .
           file: ./apps/tanstack-start/.docker/Dockerfile
-          tags: pchmn/monorepo-template-tanstack-start:${{ github.sha}}
+          tags: pchmn/rr7-supabase-starter-tanstack-start:${{ github.sha}}
           push: true
 
   deploy:
@@ -55,7 +55,7 @@ jobs:
           dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
           project-id: 0_G71Uh8nHwvaHXw0eqew
           application-name: pr-${{ github.event.number }}
-          docker-image: pchmn/monorepo-template-tanstack-start:${{ github.sha }}
+          docker-image: pchmn/rr7-supabase-starter-tanstack-start:${{ github.sha }}
           docker-port: 8080
           env: |
             SUPABASE_URL=${{ secrets.PREVIEW_SUPABASE_URL }}

@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-template/tsconfig",
+  "name": "@rr7-supabase-starter/tsconfig",
   "private": true,
   "version": "0.0.1",
   "files": ["base.json"]

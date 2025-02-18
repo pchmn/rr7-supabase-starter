@@ -17,9 +17,9 @@ COPY . /app/
 RUN --mount=type=cache,target=${PNPM_HOME} \
     pnpm install --frozen-lockfile
 RUN --mount=type=cache,target=${TURBO_CACHE_DIR} \
-    pnpm turbo build --filter=@monorepo-template/tanstack-start
+    pnpm turbo build --filter=@rr7-supabase-starter/tanstack-start
 RUN --mount=type=cache,target=${PNPM_HOME} \
-    pnpm deploy --filter=@monorepo-template/tanstack-start --prod /prod
+    pnpm deploy --filter=@rr7-supabase-starter/tanstack-start --prod /prod
 
 FROM base AS production
 WORKDIR /app
