@@ -1,12 +1,12 @@
-import { useTheme } from 'remix-themes';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  const [theme] = useTheme();
-
+const Toaster = ({
+  theme,
+  ...props
+}: ToasterProps & { theme?: 'dark' | 'light' }) => {
   return (
     <Sonner
-      theme={theme as ToasterProps['theme']}
+      theme={theme}
       className='toaster group'
       toastOptions={{
         classNames: {

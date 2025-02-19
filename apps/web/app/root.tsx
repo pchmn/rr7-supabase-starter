@@ -91,7 +91,7 @@ function App() {
       </head>
       <body>
         <Outlet />
-        <Toaster />
+        <Toaster theme={theme as 'dark' | 'light'} />
         <ScrollRestoration />
         <script
           // /!\ Be aware to only inject env variables that are safe to be used in the client
