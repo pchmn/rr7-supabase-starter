@@ -6,6 +6,7 @@ FROM node:${NODE_VERSION}-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV TURBO_CACHE_DIR="/.turbo"
 ENV PATH="$PNPM_HOME:$PATH"
+RUN npm install -g corepack@latest
 RUN corepack enable
 RUN pnpm config set store-dir ${PNPM_HOME}
 
