@@ -18,6 +18,6 @@ jobs:
         with:
           dokploy-base-url: ${{ secrets.DOKPLOY_BASE_URL }}
           dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
-          project-id: r50a1a6RBguoaGvK3guwR
+          project-id: 0_G71Uh8nHwvaHXw0eqew
           application-name: pr-${{ github.event.number }}
           action: destroy

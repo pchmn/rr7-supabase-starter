@@ -91,9 +91,9 @@ jobs:
         with:
           dokploy-base-url: ${{ secrets.DOKPLOY_BASE_URL }}
           dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
-          project-id: r50a1a6RBguoaGvK3guwR
+          project-id: 0_G71Uh8nHwvaHXw0eqew
           application-name: Production
-          application-domain: rr7-supabase-starter.com
+          application-domain: rr7-supabase-starter.pchmn.dev
           docker-image: pchmn/rr7-supabase-starter-web:${{ needs.build-web.outputs.app_version }}
           docker-username: ${{ secrets.DOCKER_USERNAME }}
           docker-password: ${{ secrets.DOCKER_PASSWORD }}
