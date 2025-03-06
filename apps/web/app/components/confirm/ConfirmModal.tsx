@@ -38,19 +38,7 @@ export function ConfirmModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        closable={!loading}
-        onInteractOutside={(e) => {
-          if (loading) {
-            e.preventDefault();
-          }
-        }}
-        onEscapeKeyDown={(e) => {
-          if (loading) {
-            e.preventDefault();
-          }
-        }}
-      >
+      <DialogContent closable={!loading}>
         <DialogHeader>
           <DialogTitle>{title || t('confirmModal.title')}</DialogTitle>
         </DialogHeader>
@@ -64,7 +52,7 @@ export function ConfirmModal({
           <Button
             variant={destructive ? 'destructive' : 'default'}
             onClick={onConfirm}
-            loading={loading}
+            // loading={loading}
           >
             {confirmLabel || t('confirmModal.confirmLabel')}
           </Button>
