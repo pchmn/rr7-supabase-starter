@@ -17,6 +17,9 @@ importers:
       '@release-it/conventional-changelog':
         specifier: ^9.0.4
         version: 9.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@17.11.0(typescript@5.7.2))
+      '@types/node':
+        specifier: ^20
+        version: 20.17.7
       release-it:
         specifier: ^17.11.0
         version: 17.11.0(typescript@5.7.2)

@@ -9,6 +9,7 @@
   },
   "homepage": "https://github.com/pchmn/rr7-supabase-starter",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "turbo dev",
     "sup:start": "supabase start",
@@ -19,12 +20,14 @@
     "clean": "npx npkill",
     "release": "release-it",
     "list-mismatches": "npx syncpack list-mismatches --types dev,prod,peer",
-    "fix-mismatches": "npx syncpack fix-mismatches --types dev,prod,peer"
+    "fix-mismatches": "npx syncpack fix-mismatches --types dev,prod,peer",
+    "reset-project": "node --experimental-strip-types scripts/reset-project.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@release-it-plugins/workspaces": "^4.2.0",
     "@release-it/conventional-changelog": "^9.0.4",
+    "@types/node": "^20",
     "release-it": "^17.11.0",
     "turbo": "^2.3.1"
   },
