@@ -1,66 +1,89 @@
-name: Deploy to Production and Create a Release
+name: Deploy to Production
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 
 jobs:
-  create_tag:
+  deploy-supabase:
+    name: 🔄 Run Supabase migrations
     runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
 
-    - name: Get tag name
-      id: tag
-      run: |
-        DATE=$(date +'%Y%m%d%H%M')
-        VERSION=$(node -p "require('./apps/tanstack-start/package.json').version")
-        echo "TAG_NAME=v${VERSION}-${DATE}" >> "$GITHUB_OUTPUT"
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.PRODUCTION_SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.PRODUCTION_SUPABASE_PROJECT_ID }}
+      # Used in supabase/config.toml
+      # supabase/config.toml is only used locally, but "supabase link" command will fail if these are not set
+      # so we need to set them to any values
+      GOOGLE_CLIENT_ID: '***'
+      GOOGLE_SECRET: '***'
 
-    - name: Create tag
-      run: |
-        TAG_NAME=${{ steps.tag.outputs.tag_name }}
-        echo "Creating tag $TAG_NAME"
-        git tag $TAG_NAME
-        git push origin $TAG_NAME
-
-    outputs:
-      tag_name: ${{ steps.tag.outputs.tag_name }}
-
-  build:
-    name: 🐳 Build Docker Image
-    runs-on: ubuntu-latest
-    needs: create_tag
     steps:
       - uses: actions/checkout@v4
+
+      - name: 🏗 Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      
+      - name: 🔄 Run Supabase migrations
+        run: supabase db push
+
+  build-web:
+    name: 🐳 Build Web App Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+            fetch-depth: 100
+            fetch-tags: true
+
+      - uses: ./.github/actions/setup-node
+        with:
+          install: true
+
+      - name: 🏷️ Get version
+        id: get_version
+        run: |
+          echo "APP_VERSION=$(pnpm release-it --release-version)" >> "$GITHUB_OUTPUT"
+          echo "APP_VERSION_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🐳 Build Docker Image
         uses: ./.github/actions/build-docker
         with:
-          # AWS
-          aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-bucket-name: github-actions-cache-pchmn
+          # AWS (for CI caching)
+          # aws-region: us-east-1
+          # aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # aws-bucket-name: github-actions-cache-pchmn
           # Docker Hub
           # registry: <registry>
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           # Docker build
           context: .
-          file: ./apps/tanstack-start/.docker/Dockerfile
-          tags: pchmn/monorepo-template-tanstack-start:${{ needs.create_tag.outputs.tag_name }}
+          file: ./apps/web/.docker/Dockerfile
+          tags: pchmn/rr7-supabase-starter-web:${{ steps.get_version.outputs.APP_VERSION }}
+          build-args: |
+            APP_VERSION=${{ steps.get_version.outputs.APP_VERSION }}
+            APP_VERSION_DATE=${{ steps.get_version.outputs.APP_VERSION_DATE }}
           push: true
 
     outputs:
-      tag_name: ${{ needs.create_tag.outputs.tag_name }}
+      app_version: ${{ steps.get_version.outputs.APP_VERSION }}
 
-  deploy:
-    name: 🚀 Deploy to Production
+  deploy-web:
+    name: 🚀 Deploy Web App to Production
     runs-on: ubuntu-latest
-    needs: build
+    needs: [deploy-supabase, build-web]
     steps:
       - uses: actions/checkout@v4
 
@@ -71,24 +94,36 @@ jobs:
           dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
           project-id: 0_G71Uh8nHwvaHXw0eqew
           application-name: Production
-          application-domain: monorepo-template.pchmn.dev
-          docker-image: pchmn/monorepo-template-tanstack-start:${{ needs.build.outputs.tag_name }}
+          application-domain: rr7-supabase-starter.pchmn.dev
+          docker-image: pchmn/rr7-supabase-starter-web:${{ needs.build-web.outputs.app_version }}
+          docker-username: ${{ secrets.DOCKER_USERNAME }}
+          docker-password: ${{ secrets.DOCKER_PASSWORD }}
           docker-port: 8080
           env: |
-            SUPABASE_URL=${{ secrets.SUPABASE_URL }}
-            SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+            SUPABASE_URL=${{ secrets.PRODUCTION_SUPABASE_URL }}
+            SUPABASE_ANON_KEY=${{ secrets.PRODUCTION_SUPABASE_ANON_KEY }}
+            SUPABASE_SERVICE_ROLE_KEY=${{ secrets.PRODUCTION_SUPABASE_SERVICE_ROLE_KEY }}
+            SESSION_SECRET=${{ secrets.PRODUCTION_SESSION_SECRET }}
+            SITE_URL=https://rr7-supabase-starter.com
 
-    outputs:
-      tag_name: ${{ needs.build.outputs.tag_name }}
-
-  gh-release:
-    name: 📦 Create GitHub Release
+  release:
+    name: 📦 Release
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: deploy-web
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 100
+          fetch-tags: true
+
+      - uses: ./.github/actions/setup-node
+        with:
+          install: true
 
       - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ needs.deploy.outputs.tag_name }}
+        run: |
+          git config --global user.email "release-it-bot@github.com"
+          git config --global user.name "release-it-bot"
+          pnpm release --ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

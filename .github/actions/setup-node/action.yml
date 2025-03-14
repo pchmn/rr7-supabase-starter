@@ -4,11 +4,11 @@ description: Setup Node, pnpm and turbo
 inputs:
   node-version:
     description: Version of Node to use
-    default: 22.11.0
+    default: 22.13.0
 
   pnpm-version:
     description: Version of pnpm to use
-    default: 9.14.2
+    required: false
 
   install:
     description: Run pnpm install
@@ -20,7 +20,7 @@ inputs:
 
   turbo-cache:
     description: Enable turbo cache
-    default: "true"
+    default: "false"
 
 runs:
   using: composite

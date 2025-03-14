@@ -1,0 +1,80 @@
+{
+  "common": {
+    "goHome": "Accueil",
+    "oops": "Oups !",
+    "and": "et",
+    "or": "ou"
+  },
+  "confirmModal": {
+    "title": "Êtes-vous sûr ?",
+    "description": "Cette action est irréversible.",
+    "confirmLabel": "Confirmer",
+    "cancelLabel": "Annuler"
+  },
+  "error": {
+    "unknownError": "Oups ! Une erreur s'est produite. Veuillez réessayer."
+  },
+  "header": {
+    "theme": {
+      "title": "Thème",
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
+    "language": {
+      "title": "Langue",
+      "en": "Anglais",
+      "fr": "Français"
+    },
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "account": "Mon compte"
+  },
+  "index": {
+    "dontLoseYourProgress": "Ne perdez pas votre progression !",
+    "signIn": "Connectez-vous"
+  },
+  "auth": {
+    "signIn": {
+      "meta": {
+        "title": " Se connecter • rr7-supabase-starter",
+        "description": "Se connecter à rr7-supabase-starter"
+      },
+      "title": "Se connecter à rr7-supabase-starter",
+      "subtitle": "Gardez une trace de vos connaissances",
+      "signInWithGoogle": "Continuer avec Google",
+      "acceptTermsAndConditions": "En continuant, vous confirmez avoir lu et accepté nos",
+      "termsAndConditions": "Conditions d'utilisation",
+      "privacyPolicy": "Politique de confidentialité",
+      "oauthError": "Nous n'avons pas pu vous connecter. Veuillez réessayer.",
+      "alreadySignedIn": "Vous êtes déjà connecté"
+    }
+  },
+  "account": {
+    "title": "Mon compte",
+    "signOut": "Se déconnecter",
+    "meta": {
+      "title": "Mon compte • rr7-supabase-starter",
+      "description": "Gérer mon compte rr7-supabase-starter"
+    },
+    "language": {
+      "title": "Langue",
+      "description": "Changer la langue de l'interface.",
+      "en": "Anglais",
+      "fr": "Français"
+    },
+    "theme": {
+      "title": "Thème",
+      "description": "Changer le thème de l'interface.",
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
+    "deleteAccount": {
+      "title": "Supprimer mon compte",
+      "description": "Cette action est irréversible. Elle supprimera définitivement votre compte et tous vos données.",
+      "confirmLabel": "Supprimer mon compte",
+      "cancelLabel": "Annuler"
+    }
+  }
+}

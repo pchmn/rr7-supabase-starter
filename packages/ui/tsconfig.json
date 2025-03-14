@@ -1,5 +1,5 @@
 {
-  "extends": "@monorepo-template/tsconfig/base.json",
+  "extends": "@rr7-supabase-starter/tsconfig/base.json",
   "include": ["src", "."],
   "exclude": ["node_modules", "postcss.config.js"],
   "compilerOptions": {

@@ -6,59 +6,56 @@ import {
 } from '@supabase/supabase-js';
 import { createSupabaseServerClient } from '../client/client.server';
 
-export type SerializedUser = Omit<User, 'factors'>;
+type AuthCallback = {
+  onSuccess?: (
+    supabase: SupabaseClient,
+    user: User | null,
+  ) => void | Promise<void>;
+};
 
-export function serializeUser(user: User | null) {
-  if (!user) {
-    return null;
+function createAuthClient(ctx: Request | SupabaseClient) {
+  let supabase: SupabaseClient;
+  let headers: Headers | undefined;
+  if (ctx instanceof Request) {
+    const res = createSupabaseServerClient(ctx);
+    supabase = res.supabase;
+    headers = res.headers;
+  } else {
+    supabase = ctx;
   }
-  return {
-    ...user,
-    factors: undefined,
-  } as SerializedUser;
+  return { supabase, headers };
 }
 
-export function serializeAuthError(error: AuthError | null) {
-  if (!error) {
-    return null;
-  }
-  return {
-    name: error.name,
-    message: error.message,
-    code: error.code as string,
-    status: error.status,
-    stack: error.stack,
-  };
-}
-
-export async function getCurrentUser() {
-  const supabase = createSupabaseServerClient();
+export async function getCurrentUser(ctx: Request | SupabaseClient) {
+  const { supabase, headers } = createAuthClient(ctx);
 
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser();
 
-  return {
-    supabase,
-    user: serializeUser(user),
-    error: serializeAuthError(error),
-  };
+  return { supabase, user, error, headers };
 }
 
-export async function updateCurrentUser(attributes: UserAttributes) {
-  const supabase = createSupabaseServerClient();
+export async function updateCurrentUser(
+  request: Request,
+  attributes: UserAttributes,
+) {
+  const { supabase, headers } = createSupabaseServerClient(request);
 
   const {
     data: { user },
     error,
   } = await supabase.auth.updateUser(attributes);
 
-  return { user: serializeUser(user), error: serializeAuthError(error) };
+  return { user, error, headers };
 }
 
-export async function deleteCurrentUser() {
-  const supabase = createSupabaseServerClient({ admin: true });
+export async function deleteCurrentUser(request: Request) {
+  const { supabase, headers } = createSupabaseServerClient(request, {
+    admin: true,
+  });
+
   const {
     data: { user },
     error: userError,
@@ -67,76 +64,50 @@ export async function deleteCurrentUser() {
   if (!user || userError) {
     return {
       error: new AuthError('User not found', 404, 'user_not_found'),
+      headers,
     };
   }
 
   const { error } = await supabase.auth.admin.deleteUser(user.id);
 
-  return { error: serializeAuthError(error) };
+  return { error, headers };
 }
 
-export async function generateMagicLink(email: string) {
-  const supabase = createSupabaseServerClient({ admin: true });
+export async function sendMagicLinkEmail(request: Request, email: string) {
+  const { supabase, headers } = createSupabaseServerClient(request);
 
-  try {
-    const {
-      data: { properties, user },
-      error,
-    } = await supabase.auth.admin.generateLink({
-      email,
-      type: 'magiclink',
-    });
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+  });
 
-    return {
-      properties,
-      user: serializeUser(user),
-      error: serializeAuthError(error),
-    };
-  } catch (unexpectedError) {
-    return {
-      properties: null,
-      user: null,
-      error: serializeAuthError(
-        new AuthError(
-          unexpectedError.message ?? 'Unknown error',
-          500,
-          'unknown_error',
-        ),
-      ),
-    };
-  }
+  return { error, headers };
 }
 
-export async function signOut() {
-  const supabase = createSupabaseServerClient();
+export async function signOut(request: Request) {
+  const { supabase, headers } = createSupabaseServerClient(request);
 
   try {
     const { error } = await supabase.auth.signOut();
 
-    return { error: serializeAuthError(error) };
+    return { error, headers };
   } catch (unexpectedError) {
     return {
-      error: serializeAuthError(
-        new AuthError(
-          unexpectedError.message ?? 'Unknown error',
-          500,
-          'unknown_error',
-        ),
+      error: new AuthError(
+        unexpectedError.message ?? 'Unknown error',
+        500,
+        'unknown_error',
       ),
+      headers,
     };
   }
 }
 
 export async function verifyEmailOtp(
+  request: Request,
   params: { otp: string; email: string },
-  callback?: {
-    onSuccess?: (
-      suapabase: SupabaseClient,
-      user: User | null,
-    ) => void | Promise<void>;
-  },
+  callback?: AuthCallback,
 ) {
-  const supabase = createSupabaseServerClient();
+  const { supabase, headers } = createSupabaseServerClient(request);
 
   try {
     const {
@@ -152,31 +123,26 @@ export async function verifyEmailOtp(
       await callback.onSuccess(supabase, user);
     }
 
-    return { user: serializeUser(user), error: serializeAuthError(error) };
+    return { user, error, headers };
   } catch (unexpectedError) {
     return {
       user: null,
-      error: serializeAuthError(
-        new AuthError(
-          unexpectedError.message ?? 'Unknown error',
-          500,
-          'unknown_error',
-        ),
+      error: new AuthError(
+        unexpectedError.message ?? 'Unknown error',
+        500,
+        'unknown_error',
       ),
+      headers,
     };
   }
 }
 
 export async function verifyEmailToken(
+  request: Request,
   tokenHash: string,
-  callback?: {
-    onSuccess?: (
-      suapabase: SupabaseClient,
-      user: User | null,
-    ) => void | Promise<void>;
-  },
+  callback?: AuthCallback,
 ) {
-  const supabase = createSupabaseServerClient();
+  const { supabase, headers } = createSupabaseServerClient(request);
 
   try {
     const {
@@ -188,31 +154,26 @@ export async function verifyEmailToken(
       await callback.onSuccess(supabase, user);
     }
 
-    return { user: serializeUser(user), error: serializeAuthError(error) };
+    return { user, error, headers };
   } catch (unexpectedError) {
     return {
       user: null,
-      error: serializeAuthError(
-        new AuthError(
-          unexpectedError.message ?? 'Unknown error',
-          500,
-          'unknown_error',
-        ),
+      error: new AuthError(
+        unexpectedError.message ?? 'Unknown error',
+        500,
+        'unknown_error',
       ),
+      headers,
     };
   }
 }
 
 export async function verifyOauthCode(
+  request: Request,
   code: string,
-  callback?: {
-    onSuccess?: (
-      suapabase: SupabaseClient,
-      user: User | null,
-    ) => void | Promise<void>;
-  },
+  callback?: AuthCallback,
 ) {
-  const supabase = createSupabaseServerClient();
+  const { supabase, headers } = createSupabaseServerClient(request);
 
   try {
     const {
@@ -224,17 +185,16 @@ export async function verifyOauthCode(
       await callback.onSuccess(supabase, user);
     }
 
-    return { user: serializeUser(user), error: serializeAuthError(error) };
+    return { user, error, headers };
   } catch (unexpectedError) {
     return {
       user: null,
-      error: serializeAuthError(
-        new AuthError(
-          unexpectedError.message ?? 'Unknown error',
-          500,
-          'unknown_error',
-        ),
+      error: new AuthError(
+        unexpectedError.message ?? 'Unknown error',
+        500,
+        'unknown_error',
       ),
+      headers,
     };
   }
 }

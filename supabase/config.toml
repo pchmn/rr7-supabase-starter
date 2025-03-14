@@ -2,7 +2,7 @@
 # https://supabase.com/docs/guides/local-development/cli/config
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "monorepo-template"
+project_id = "rr7-supabase-starter"
 
 [api]
 enabled = true
@@ -97,9 +97,9 @@ file_size_limit = "50MiB"
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
-site_url = "http://0.0.0.0:5174"
+site_url = "http://0.0.0.0:5171"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["https://0.0.0.0:5174"]
+additional_redirect_urls = ["http://0.0.0.0:5171/oauth/callback", "http://localhost:5171/oauth/callback"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
@@ -215,7 +215,7 @@ max_frequency = "5s"
 enabled = true
 client_id = "env(GOOGLE_CLIENT_ID)"
 secret = "env(GOOGLE_SECRET)"
-redirect_uri = "http://0.0.0.0:54321/auth/v1/callback" # Overrides the default auth redirectUrl.
+redirect_uri = "http://localhost:54321/auth/v1/callback" # Overrides the default auth redirectUrl.
 
 [auth.external.apple]
 enabled = false
