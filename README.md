@@ -25,6 +25,7 @@ The monorepo is organized into two main directories:
 - [`Dockploy`](https://docs.dokploy.com/docs/core) server in order to deploy apps
 - [`Supabase`](https://supabase.com/) account for the database and auth
 - [`Docker`](https://www.docker.com/) registry in order to build the docker images
+- [`Google`](https://console.cloud.google.com/) account for the Google oauth configuration
 
 ## Getting Started
 
@@ -51,7 +52,7 @@ Once this template cloned, there is a task list in order to start fresh and with
   - [ ] `PRODUCTION_SUPABASE_SERVICE_ROLE_KEY`: Service role key for production Supabase project
   - [ ] `PRODUCTION_SUPABASE_URL`: URL for production Supabase instance
   - [ ] `SUPABASE_ACCESS_TOKEN`: Access token for Supabase API
-
+- [ ] 6. Create a Google project and configure OAuth 2.0 credentials for the web app and connect it to your `Supabase` projects
 
 You should be good to go with a fresh new project!
 
