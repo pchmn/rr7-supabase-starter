@@ -13,32 +13,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # deploy-supabase:
-  #   name: 🔄 Run Supabase migrations
-  #   runs-on: ubuntu-latest
+  deploy-supabase:
+    name: 🔄 Run Supabase migrations
+    runs-on: ubuntu-latest
 
-  #   env:
-  #     SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-  #     SUPABASE_DB_PASSWORD: ${{ secrets.PREVIEW_SUPABASE_DB_PASSWORD }}
-  #     SUPABASE_PROJECT_ID: ${{ secrets.PREVIEW_SUPABASE_PROJECT_ID }}
-  #     # Used in supabase/config.toml
-  #     # supabase/config.toml is only used locally, but "supabase link" command will fail if these are not set
-  #     # so we need to set them to any values
-  #     GOOGLE_CLIENT_ID: '***'
-  #     GOOGLE_SECRET: '***'
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.PREVIEW_SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: ${{ secrets.PREVIEW_SUPABASE_PROJECT_ID }}
+      # Used in supabase/config.toml
+      # supabase/config.toml is only used locally, but "supabase link" command will fail if these are not set
+      # so we need to set them to any values
+      GOOGLE_CLIENT_ID: '***'
+      GOOGLE_SECRET: '***'
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: 🏗 Setup Supabase CLI
-  #       uses: supabase/setup-cli@v1
-  #       with:
-  #         version: latest
+      - name: 🏗 Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
 
-  #     - run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
       
-  #     - name: 🔄 Run Supabase migrations
-  #       run: supabase db push
+      - name: 🔄 Run Supabase migrations
+        run: supabase db push
 
   build-web:
     name: 🐳 Build Web App Docker Image
@@ -78,7 +78,7 @@ jobs:
   deploy-web:
     name: 🚀 Deploy Web App to Dokploy
     runs-on: ubuntu-latest
-    needs: [build-web]
+    needs: [deploy-supabase, build-web]
     permissions:
       contents: read
       pull-requests: write
