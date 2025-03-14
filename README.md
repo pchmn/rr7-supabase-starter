@@ -53,9 +53,7 @@ Once this template cloned, there is a task list in order to start fresh and with
   - [ ] `SUPABASE_ACCESS_TOKEN`: Access token for Supabase API
 
 
-1. Clone this repository
-2. Install dependencies: `pnpm i`
-3. Reset project by running: `pnpm reset-project <new_project_name>`
+You should be good to go with a fresh new project!
 
 ## CI
 
@@ -67,9 +65,10 @@ The repository includes automated preview deployment workflows that manage previ
 
 When a PR is opened, reopened, synchronized, or marked ready for review, the workflow:
 
-1. Builds a Docker image of the application
-2. Deploys it to [Dokploy](https://dokploy.com) with a unique preview URL
-3. Comments on the PR with the preview URL
+1. Run Supabase migrations on the preview database
+2. Builds a Docker image of the application
+3. Deploys it to [Dokploy](https://dokploy.com) with a unique preview URL
+4. Comments on the PR with the preview URL
 
 #### Preview Cleanup (`preview-down.yml`)
 
@@ -78,29 +77,16 @@ When a PR is closed (merged or abandoned), the workflow automatically:
 1. Removes the preview deployment from Dokploy
 2. Cleans up associated resources
 
-#### Required Secrets
+### Production Deployment
 
-The following secrets need to be configured in your repository settings:
+The repository includes automated production deployment workflows that manage the production environment:
 
-**Docker Hub Authentication:**
+#### Production Deployment (`production.yml`)
 
-- `DOCKER_USERNAME`: Your Docker registry username
-- `DOCKER_PASSWORD`: A Docker registry password
+When a PR is merged, the workflow:
 
-> if using a different registry than docker hub, change `registry` input for action `./.github/actions/build-docker` in `preview-up.yml`
-
-**AWS Cache (Optional):**
-
-- `AWS_ACCESS_KEY_ID`: AWS access key for S3 cache
-- `AWS_SECRET_ACCESS_KEY`: AWS secret key for S3 cache
-
-**Dokploy Deployment:**
-
-- `DOKPLOY_BASE_URL`: The base URL of your Dokploy instance
-- `DOKPLOY_TOKEN`: Authentication token for Dokploy API access
-
-The workflows use these secrets to:
-
-- Push built images to Docker Hub
-- Store build cache in AWS S3 (if configured)
-- Deploy and manage preview environments in Dokploy
+1. Runs Supabase migrations on the production database
+2. Creates a new release (tag, changelog, etc)
+3. Builds a Docker image of the application with the new version
+4. Pushes it to the Docker registry
+5. Deploys it to Dokploy
