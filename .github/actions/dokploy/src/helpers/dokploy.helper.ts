@@ -41,6 +41,7 @@ export async function getOrCreateApplication({
       appName: applicationName,
     },
   });
+
   if (application) {
     const domain =
       applicationDomain ||
