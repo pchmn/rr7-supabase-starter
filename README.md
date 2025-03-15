@@ -33,8 +33,9 @@ Once this template cloned, there is a task list in order to start fresh and with
 - [ ] 1. Reset project (set version to 0.0.0 and rename project): `pnpm reset-project <new_project_name>`
 - [ ] 2. Install dependencies: `pnpm i`
 - [ ] 3. Create a new project on your `Dokploy` server and replace `project-id` in `preview-up.yml`, `preview-down.yml` and `production.yml` workflows with your project id
-- [ ] 4. Create 2 new projects on your `Supabase` account: one for the previews and one for the production
-- [ ] 5. Create these repository secrets on GitHub:
+- [ ] 4. Update `application-domain` in `production.yml` workflow with your project domain
+- [ ] 5. Create 2 new projects on your `Supabase` account: one for the previews and one for the production
+- [ ] 6. Create these repository secrets on GitHub:
   - [ ] `DOCKER_USERNAME`: Your Docker registry username
   - [ ] `DOCKER_PASSWORD`: Your Docker registry password
   - [ ] `DOKPLOY_BASE_URL`: The base URL of your Dokploy instance
@@ -52,7 +53,9 @@ Once this template cloned, there is a task list in order to start fresh and with
   - [ ] `PRODUCTION_SUPABASE_SERVICE_ROLE_KEY`: Service role key for production Supabase project
   - [ ] `PRODUCTION_SUPABASE_URL`: URL for production Supabase instance
   - [ ] `SUPABASE_ACCESS_TOKEN`: Access token for Supabase API
-- [ ] 6. Create a Google project and configure OAuth 2.0 credentials for the web app and connect it to your `Supabase` projects
+- [ ] 7. Create a Google project and configure OAuth 2.0 credentials for the web app and connect it to your `Supabase` projects
+- [ ] 8. Enable anonymous sign-ins in your `Supabase` projects
+- [ ] 9. Set "Read and write permissions" on Workflow permissions on your GitHub repository (settings -> actions -> general -> Workflow permissions), it is necessary for creating releases
 
 You should be good to go with a fresh new project!
 
